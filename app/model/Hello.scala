@@ -21,8 +21,7 @@ object Hello {
 
   implicit val HelloRead : Reads[Hello]= new Reads[Hello] {
     def reads(json : JsValue): JsResult[Hello] = {
-      val message = (json \ "message").validate[String]
-      Hello(message.get)
+      for (message <- (json \ "message").validate[String]) yield Hello(message)
     }
   }
 }
