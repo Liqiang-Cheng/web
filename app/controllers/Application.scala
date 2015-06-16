@@ -11,23 +11,26 @@ object Application extends Controller {
   }
 
   def hello = Action {
-    val h = Hello("Liqiang Cheng")
-    println(h)
+    val h = Hello("Eric Cheng")
     val json = Json.toJson(h)
-    println(json)
     Ok(json)
   }
 
   def helloBack = Action {
       request =>
-        request.body.asJson.map { json =>
-          json.validate[Hello].map{
-            case (hello) => Ok(hello.message)
-          }.recoverTotal{
-            e => BadRequest("Bad request")
+        request.body.asJson.map {
+          json => {
+            println(json)
+            json.validate[Hello].map{
+              case (hello) => Ok(hello.message)
+            }.recoverTotal{
+              println("Json not validate")
+              e => BadRequest("Json parse failed Bad request")
+            }
           }
         }.getOrElse {
-          BadRequest("Bad request")
+          println("request body is not json")
+          BadRequest("Json failed Bad request")
         }
   }
 }
