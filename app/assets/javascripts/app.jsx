@@ -12,6 +12,7 @@ var CommentForm = React.createClass({
     return (
         <div>
           <input type="text" placeholder="Your name" ref="author"/>
+          <br/>
           <input type="button" value="Post" onClick={this.handleSubmit}/>
         </div>
     );
@@ -29,8 +30,7 @@ var CommentBox = React.createClass({
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.log(comment);
-        console.error(this.props.url, status, err.toString());
+        console.error(this.props.urlPost, status, err.toString());
       }.bind(this)
     });
   },
@@ -43,7 +43,7 @@ var CommentBox = React.createClass({
         this.setState({data: data});
       }.bind(this),
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error(this.props.urlGet, status, err.toString());
       }.bind(this)
     });
   },
